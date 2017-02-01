@@ -79,17 +79,12 @@ public class Employee {
 
     public void performOrientation(String cubeID) {
         if (orientationDate == null) {
-            outputErrorMessage();
             return;
         }
         meetWithHrForBenefitAndSalryInfo();
         meetDepartmentStaff();
         reviewDeptPolicies();
         moveIntoCubicle(cubeID);
-    }
-
-    private void outputErrorMessage() {
-        System.out.println("Your input was invalid.");
     }
 
     public String getFirstName() {
