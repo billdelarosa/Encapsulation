@@ -81,6 +81,17 @@ public class Employee {
             + fmtDate);
     }
     
+    private boolean ssnValidate(String ssn){
+    boolean ssnValidate = false;
+        
+    if (ssn == null || ssn.isEmpty() || ssn.length() != 9) {
+        return ssnValidate;
+        } 
+        ssnValidate = true;
+        return ssnValidate;
+        }
+
+    
     private boolean validateString(String name){
         boolean nameValidate = false;
         
@@ -139,10 +150,9 @@ public class Employee {
     }
 
     public void setSsn(String ssn) {
-        if (ssn == null || ssn.isEmpty() || ssn.length() != 9) {
-            outputError();
+        if (!ssnValidate(ssn)){
             return;
-        } 
+        }
         this.ssn=ssn;
     }
     
