@@ -12,6 +12,7 @@ import java.util.Date;
  * @version     1.02
  */
 public class Employee {
+    public static String teacher;
     public final String COMPANY_NAME = "Acme";
     private String firstName;
     private String lastName;
@@ -23,6 +24,10 @@ public class Employee {
     private String cubeId;
     private Date orientationDate;
 
+    // BELONGS TO THE CLASS
+    public void setTeacher(String teacher) {
+        Employee.teacher = teacher;
+    }
     
     public String getFirstName() {
         return firstName;

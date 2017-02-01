@@ -74,7 +74,7 @@ public class Employee {
         orientationActivityCompleted("moved into cubicle");
     }
 
-    public void orientationActivityCompleted(String orientationActivityCompleted){
+    private void orientationActivityCompleted(String orientationActivityCompleted){
         SimpleDateFormat sdf = new SimpleDateFormat("M/d/yyyy");
         String fmtDate = sdf.format(orientationDate);       
         System.out.println(firstName + " " + lastName + orientationActivityCompleted + " on "
@@ -129,7 +129,7 @@ public class Employee {
     // allowed through validation.
     
     
-        public void setFirstName(String firstName) {
+    public void setFirstName(String firstName) {
         if (validateString(firstName)) {
         this.firstName = firstName;
         }
