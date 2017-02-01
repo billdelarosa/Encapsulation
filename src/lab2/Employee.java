@@ -46,23 +46,26 @@ public class Employee {
     // Assume this must be performed first, and assume that an employee
     // would only do this once, upon being hired.
     private void meetWithHrForBenefitAndSalryInfo() {
-        metWithHr = true;
-        orientationActivityCompleted("met with HR for benefit and salary information");
+        metWithHr = true;      
+        System.out.println(firstName + " " + lastName + " met with HR for benefits and salary info "
+            + getFormattedDate(orientationDate));
     }
 
     // Assume this must be performed first, and assume that an employee
     // would only do this once, upon being hired.:
     private void meetDepartmentStaff() {
-        metDeptStaff = true;
-        orientationActivityCompleted("met with department staff");
+        metDeptStaff = true;    
+        System.out.println(firstName + " " + lastName + " met with department staff "
+            + getFormattedDate(orientationDate));
     }
 
     // Assume this must be performed third. And assume that because department
     // policies may change that this method may need to be called 
     // independently from other classes.
     public void reviewDeptPolicies() {
-        reviewedDeptPolicies = true;
-        orientationActivityCompleted("reviewed department policies");
+        reviewedDeptPolicies = true;    
+        System.out.println(firstName + " " + lastName + " reviewed department policies on "
+            + getFormattedDate(orientationDate));
     }
 
     // Assume this must be performed 4th. And assume that because employees
@@ -70,15 +73,14 @@ public class Employee {
     // independently from other classes.
     public void moveIntoCubicle(String cubeId) {
         this.cubeId = cubeId;
-        this.movedIn = true;
-        orientationActivityCompleted("moved into cubicle");
+        this.movedIn = true; 
+        System.out.println(firstName + " " + lastName + " moved into cubicle on "
+            + getFormattedDate(orientationDate));
     }
-
-    private void orientationActivityCompleted(String orientationActivityCompleted){
+    
+    public String getFormattedDate(Date orientationDate) {
         SimpleDateFormat sdf = new SimpleDateFormat("M/d/yyyy");
-        String fmtDate = sdf.format(orientationDate);       
-        System.out.println(firstName + " " + lastName + orientationActivityCompleted + " on "
-            + fmtDate);
+        return sdf.format(orientationDate);
     }
     
     private boolean ssnValidate(String ssn){
@@ -196,6 +198,11 @@ public class Employee {
 
     
     public void setCubeId(String cubeId) {
+        // 1-100 cubicles to choose from
+        if (cubeId == null || cubeId.isEmpty() || Integer.parseInt(cubeId) > 100 
+            || Integer.parseInt(cubeId) < 1){
+            return;
+        }
         this.cubeId = cubeId;
     }
 
@@ -204,5 +211,8 @@ public class Employee {
     }
 
     public void setOrientationDate(Date orientationDate) {
+        if (orientationDate == null){
+            return;
+        }
         this.orientationDate = orientationDate;
     }}
