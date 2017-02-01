@@ -92,20 +92,15 @@ public class Employee {
         return nameValidate;
     }
     
-    private boolean ssnValidate(String ssn){
-        boolean ssnValidate = false;
-        
-        if (ssn == null || ssn.isEmpty() || ssn.length() != 9) {
+    public void meetWithStaff(String cubeID){
+        if (orientationDate == null){
             outputError();
-            return ssnValidate;
-        } 
-        ssnValidate = true;
-        return ssnValidate;
-    }
-    
-    public void meetWithStaff(){
+            return;
+        }
         meetWithHrForBenefitAndSalryInfo();
         meetDepartmentStaff();
+        reviewDeptPolicies();
+        moveIntoCubicle(cubeID);
     }
     
     
@@ -144,10 +139,13 @@ public class Employee {
     }
 
     public void setSsn(String ssn) {
-        if (ssnValidate(ssn)){
-        this.ssn = ssn;
-        }
+        if (ssn == null || ssn.isEmpty() || ssn.length() != 9) {
+            outputError();
+            return;
+        } 
+        this.ssn=ssn;
     }
+    
 
     public boolean isMetWithHr() {
         return metWithHr;
