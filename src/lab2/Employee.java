@@ -103,7 +103,7 @@ public class Employee {
         return nameValidate;
     }
     
-    public void meetWithStaff(String cubeID){
+    public void performOrientation(String cubeID){
         if (orientationDate == null){
             outputError();
             return;
