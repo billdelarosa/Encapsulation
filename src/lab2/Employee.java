@@ -31,29 +31,30 @@ public class Employee {
     private Date orientationDate;
 
     public Employee(String firstName, String lastName, String ssn) {
+        
+        if (validateString(firstName)){
         this.firstName = firstName;
+        }
+        if (validateString(lastName)){
         this.lastName = lastName;
+        }
+        if (ssnValidate(ssn)){
         this.ssn = ssn;
+        }
     }
 
     // Assume this must be performed first, and assume that an employee
     // would only do this once, upon being hired.
-    public void meetWithHrForBenefitAndSalryInfo() {
+    private void meetWithHrForBenefitAndSalryInfo() {
         metWithHr = true;
-        SimpleDateFormat sdf = new SimpleDateFormat("M/d/yyyy");
-        String fmtDate = sdf.format(orientationDate);        
-        System.out.println(firstName + " " + lastName + " met with Hr on "
-            + fmtDate);
+        orientationActivityCompleted("met with HR for benefit and salary information");
     }
 
     // Assume this must be performed first, and assume that an employee
     // would only do this once, upon being hired.:
-    public void meetDepartmentStaff() {
+    private void meetDepartmentStaff() {
         metDeptStaff = true;
-        SimpleDateFormat sdf = new SimpleDateFormat("M/d/yyyy");
-        String fmtDate = sdf.format(orientationDate);        
-        System.out.println(firstName + " " + lastName + " met with Dept. Staff on "
-            + fmtDate);
+        orientationActivityCompleted("met with department staff");
     }
 
     // Assume this must be performed third. And assume that because department
@@ -61,10 +62,7 @@ public class Employee {
     // independently from other classes.
     public void reviewDeptPolicies() {
         reviewedDeptPolicies = true;
-        SimpleDateFormat sdf = new SimpleDateFormat("M/d/yyyy");
-        String fmtDate = sdf.format(orientationDate);        
-        System.out.println(firstName + " " + lastName + " reviewed Dept policies on "
-            + fmtDate);
+        orientationActivityCompleted("reviewed department policies");
     }
 
     // Assume this must be performed 4th. And assume that because employees
@@ -73,12 +71,50 @@ public class Employee {
     public void moveIntoCubicle(String cubeId) {
         this.cubeId = cubeId;
         this.movedIn = true;
-        SimpleDateFormat sdf = new SimpleDateFormat("M/d/yyyy");
-        String fmtDate = sdf.format(orientationDate);        
-        System.out.println(firstName + " " + lastName + " moved into cubicle "
-                + cubeId + " on " + fmtDate);
+        orientationActivityCompleted("moved into cubicle");
     }
 
+    public void orientationActivityCompleted(String orientationActivityCompleted){
+        SimpleDateFormat sdf = new SimpleDateFormat("M/d/yyyy");
+        String fmtDate = sdf.format(orientationDate);       
+        System.out.println(firstName + " " + lastName + orientationActivityCompleted + " on "
+            + fmtDate);
+    }
+    
+    private boolean validateString(String name){
+        boolean nameValidate = false;
+        
+        if (name == null || name.isEmpty() || name.length() < 3) {
+            outputError();
+            return nameValidate;
+        } 
+        nameValidate = true;
+        return nameValidate;
+    }
+    
+    private boolean ssnValidate(String ssn){
+        boolean ssnValidate = false;
+        
+        if (ssn == null || ssn.isEmpty() || ssn.length() != 9) {
+            outputError();
+            return ssnValidate;
+        } 
+        ssnValidate = true;
+        return ssnValidate;
+    }
+    
+    public void meetWithStaff(){
+        meetWithHrForBenefitAndSalryInfo();
+        meetDepartmentStaff();
+    }
+    
+    
+
+    
+    private void outputError() {
+        System.out.println("Your input was invalid.");
+    }
+    
     public String getFirstName() {
         return firstName;
     }
@@ -86,8 +122,11 @@ public class Employee {
     // setter methods give the developer the power to control what data is
     // allowed through validation.
     
-    public void setFirstName(String firstName) {
-       this.firstName = firstName;
+    
+        public void setFirstName(String firstName) {
+        if (validateString(firstName)) {
+        this.firstName = firstName;
+        }
     }
 
     public String getLastName() {
@@ -95,7 +134,9 @@ public class Employee {
     }
 
     public void setLastName(String lastName) {
-       this.lastName = lastName;
+        if (validateString(lastName)) {
+        this.lastName = lastName;
+        }
     }
 
     public String getSsn() {
@@ -103,7 +144,9 @@ public class Employee {
     }
 
     public void setSsn(String ssn) {
+        if (ssnValidate(ssn)){
         this.ssn = ssn;
+        }
     }
 
     public boolean isMetWithHr() {
