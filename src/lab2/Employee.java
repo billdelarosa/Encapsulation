@@ -4,22 +4,21 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
- * In this lab focus on METHOD encapsulation and fix/add code as necessary.
- * Pay special attention to the following issues:
- *    1. Not all methods need to be public
- *    2. When methods need to be called in a certain order you can do this
- *       by creating a parent method that calls the other, helper methods.
- *    3. There is some duplicate code used that violates the D.R.Y. principle.
- *       Eliminate that by encapsulating the duplicate code in a new method
- *       and then call that method in place of the duplicate code
- *    4. All method parameters should be validated.
- * 
+ * In this lab focus on METHOD encapsulation and fix/add code as necessary. Pay
+ * special attention to the following issues: 1. Not all methods need to be
+ * public 2. When methods need to be called in a certain order you can do this
+ * by creating a parent method that calls the other, helper methods. 3. There is
+ * some duplicate code used that violates the D.R.Y. principle. Eliminate that
+ * by encapsulating the duplicate code in a new method and then call that method
+ * in place of the duplicate code 4. All method parameters should be validated.
+ *
  * Review the tips in the document "EncapCheckList.pdf" if needed.
  *
- * @author      Jim Lombardo, WCTC Instructor
- * @version     1.02
+ * @author Jim Lombardo, WCTC Instructor
+ * @version 1.02
  */
 public class Employee {
+
     private String firstName;
     private String lastName;
     private String ssn;
@@ -31,41 +30,36 @@ public class Employee {
     private Date orientationDate;
 
     public Employee(String firstName, String lastName, String ssn) {
-        
-        if (validateString(firstName)){
-        this.firstName = firstName;
+        // CONSTRUCTOR USES SET FOR VALIDATION
+            setFirstName(firstName);
+            setLastName(lastName);
+            setSsn(ssn);    
         }
-        if (validateString(lastName)){
-        this.lastName = lastName;
-        }
-        if (ssnValidate(ssn)){
-        this.ssn = ssn;
-        }
-    }
+    
 
     // Assume this must be performed first, and assume that an employee
     // would only do this once, upon being hired.
     private void meetWithHrForBenefitAndSalryInfo() {
-        metWithHr = true;      
+        metWithHr = true;
         System.out.println(firstName + " " + lastName + " met with HR for benefits and salary info "
-            + getFormattedDate(orientationDate));
+                + getFormattedDate());
     }
 
     // Assume this must be performed first, and assume that an employee
     // would only do this once, upon being hired.:
     private void meetDepartmentStaff() {
-        metDeptStaff = true;    
+        metDeptStaff = true;
         System.out.println(firstName + " " + lastName + " met with department staff "
-            + getFormattedDate(orientationDate));
+                + getFormattedDate());
     }
 
     // Assume this must be performed third. And assume that because department
     // policies may change that this method may need to be called 
     // independently from other classes.
     public void reviewDeptPolicies() {
-        reviewedDeptPolicies = true;    
+        reviewedDeptPolicies = true;
         System.out.println(firstName + " " + lastName + " reviewed department policies on "
-            + getFormattedDate(orientationDate));
+                + getFormattedDate());
     }
 
     // Assume this must be performed 4th. And assume that because employees
@@ -73,41 +67,19 @@ public class Employee {
     // independently from other classes.
     public void moveIntoCubicle(String cubeId) {
         this.cubeId = cubeId;
-        this.movedIn = true; 
+        this.movedIn = true;
         System.out.println(firstName + " " + lastName + " moved into cubicle on "
-            + getFormattedDate(orientationDate));
+                + getFormattedDate());
     }
-    
-    public String getFormattedDate(Date orientationDate) {
+
+    private String getFormattedDate() {
         SimpleDateFormat sdf = new SimpleDateFormat("M/d/yyyy");
         return sdf.format(orientationDate);
     }
-    
-    private boolean ssnValidate(String ssn){
-    boolean ssnValidate = false;
-        
-    if (ssn == null || ssn.isEmpty() || ssn.length() != 9) {
-        return ssnValidate;
-        } 
-        ssnValidate = true;
-        return ssnValidate;
-        }
 
-    
-    private boolean validateString(String name){
-        boolean nameValidate = false;
-        
-        if (name == null || name.isEmpty() || name.length() < 3) {
-            outputError();
-            return nameValidate;
-        } 
-        nameValidate = true;
-        return nameValidate;
-    }
-    
-    public void performOrientation(String cubeID){
-        if (orientationDate == null){
-            outputError();
+    public void performOrientation(String cubeID) {
+        if (orientationDate == null) {
+            outputErrorMessage();
             return;
         }
         meetWithHrForBenefitAndSalryInfo();
@@ -115,26 +87,22 @@ public class Employee {
         reviewDeptPolicies();
         moveIntoCubicle(cubeID);
     }
-    
-    
 
-    
-    private void outputError() {
+    private void outputErrorMessage() {
         System.out.println("Your input was invalid.");
     }
-    
+
     public String getFirstName() {
         return firstName;
     }
 
     // setter methods give the developer the power to control what data is
     // allowed through validation.
-    
-    
     public void setFirstName(String firstName) {
-        if (validateString(firstName)) {
-        this.firstName = firstName;
+        if (firstName == null || firstName.isEmpty()) {
+            return;
         }
+        this.firstName = firstName;
     }
 
     public String getLastName() {
@@ -142,22 +110,23 @@ public class Employee {
     }
 
     public void setLastName(String lastName) {
-        if (validateString(lastName)) {
-        this.lastName = lastName;
+        if (lastName == null || lastName.isEmpty()){
+            return;
         }
+        this.lastName=lastName;
     }
 
     public String getSsn() {
         return ssn;
     }
-
+    
     public void setSsn(String ssn) {
-        if (!ssnValidate(ssn)){
+        if (ssn == null || ssn.length() != 9){
             return;
         }
         this.ssn=ssn;
     }
-    
+
 
     public boolean isMetWithHr() {
         return metWithHr;
@@ -196,11 +165,10 @@ public class Employee {
         return cubeId;
     }
 
-    
     public void setCubeId(String cubeId) {
         // 1-100 cubicles to choose from
-        if (cubeId == null || cubeId.isEmpty() || Integer.parseInt(cubeId) > 100 
-            || Integer.parseInt(cubeId) < 1){
+        if (cubeId == null || cubeId.isEmpty() || Integer.parseInt(cubeId) > 100
+                || Integer.parseInt(cubeId) < 1) {
             return;
         }
         this.cubeId = cubeId;
@@ -211,8 +179,9 @@ public class Employee {
     }
 
     public void setOrientationDate(Date orientationDate) {
-        if (orientationDate == null){
+        if (orientationDate == null) {
             return;
         }
         this.orientationDate = orientationDate;
-    }}
+    }
+}
