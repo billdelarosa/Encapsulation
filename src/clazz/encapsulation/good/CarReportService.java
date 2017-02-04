@@ -13,11 +13,11 @@ public class CarReportService {
         this.car = car;
     }
     
-    public void produceRunningStatus() {
+    public void outputRunningStatus() {
         System.out.println("Car running status: " + car.isRunning());
     }
     
-    public void produceEngineType() {
+    public void outputEngineType() {
         System.out.println("Engine Type: " + car.getEngineType());
     }
 }

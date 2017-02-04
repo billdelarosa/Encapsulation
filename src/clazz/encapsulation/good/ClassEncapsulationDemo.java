@@ -23,13 +23,7 @@ public class ClassEncapsulationDemo {
         Car car = new Car(6);
         car.start();
 
-        CarReportService carServ = new CarReportService(car);
-        System.out.println("Information about your car:");
-        carServ.produceEngineType();
-        carServ.produceRunningStatus();
-        
         car.turnOff();
-        carServ.produceRunningStatus();
         
     }
 }

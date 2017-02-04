@@ -11,6 +11,7 @@ public class Car {
     // NO magic numbers -- use constants
     private static final int MIN_CYL = 4;
     private static final int MAX_CYL = 12;
+    private CarReportService report;
 
     private String engineType;
     // This is good compostion -- the engine object is a component of the Car object
@@ -25,25 +26,31 @@ public class Car {
     // number of cylinders for the engine is set. We can reduce the
     // number of setter method needed if we use custom constructor arguments,
     // which also promotes reliability. But don't use more than three or four.
+    
+    
     public Car(int numOfCylinders) {
+        report = new CarReportService(this);
         if(numOfCylinders < MIN_CYL || numOfCylinders > MAX_CYL) {
             // if illegal use default
-            engine = new Engine(MIN_CYL);
+            engine = new Engine(MIN_CYL, report);
             engineType = "V" + MIN_CYL;
         } else {
-            engine = new Engine(numOfCylinders);
+            engine = new Engine(numOfCylinders, report);
             engineType = "V" + numOfCylinders;
         }
+
     }
 
     // Car delegates to engine
     public void start() {
         engine.startEngine();
+        report.outputRunningStatus();
     }
 
     // Car delegates to engine
     public void turnOff() {
         engine.stop();
+        report.outputRunningStatus();
     }
 
     public String getEngineType() {
